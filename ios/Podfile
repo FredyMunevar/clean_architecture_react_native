@@ -1,6 +1,8 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+permissions_path = '../node_modules/react-native-permissions/ios'
+
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
@@ -40,4 +42,7 @@ target 'MyApp' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+  
+  pod 'Permission-Contacts', :path => "#{permissions_path}/Contacts"
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
 end
