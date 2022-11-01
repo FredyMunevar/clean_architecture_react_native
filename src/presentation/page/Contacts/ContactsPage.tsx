@@ -3,7 +3,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import ContactsList from '../../components/ContactsList/ContactsList';
 import styles from './ContactsPage.style';
 
-const ContactsPage: React.FC = () => {
+const ContactsPage = () => {
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ContactsList />
