@@ -599,7 +599,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   Permission-Contacts: 48977dcb2cfbe5ac3fec371bb92f3b36461a5fa0
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
-  RCTCallDetection: 07da027560ada435ff38087f1f5c4de67ad48318
+  RCTCallDetection: c27a0ca2c29d8e8004bebd31353fe1041408e88e
   RCTRequired: 1b4e0388c8ad776b2d23f8135926fa4e7ddacdf4
   RCTTypeSafety: 23dc09d6e9ed210fabab031a568bb0194d492385
   React: 8ca78b2619353c251478892f087d007365af8170
