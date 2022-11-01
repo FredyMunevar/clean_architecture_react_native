@@ -32,8 +32,6 @@ const ContactsList = () => {
   // };
 
   const deleteAlert = (contactToDelete: Contact) => {
-    console.log('contactToDelete', contactToDelete);
-
     return Alert.alert(
       'Are you sure to delete this contact?',
       'This action can not be undone',

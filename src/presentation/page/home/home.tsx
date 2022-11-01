@@ -7,7 +7,7 @@ import {homePageBegin} from '../../redux/home/reducers';
 import Layout from '../../layout/index';
 import styles from './style';
 
-const Home: React.FC = () => {
+const Home = () => {
   const dispatch = useDispatch();
   const data = useSelector<IState, ResponseHome>(state => state.home.data);
   const loading = useSelector<IState, boolean>(state => state.home.loading);

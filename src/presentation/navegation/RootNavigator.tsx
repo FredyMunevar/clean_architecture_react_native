@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RichTextPage from '../page/RichText/RichTextPage';
 import ContactsPage from '../page/Contacts/ContactsPage';
 import CallsPage from '../page/Calls/CallsPage';
+import CalendarPage from '../page/Calendar/CalendarPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,11 @@ export const RootNavigator: React.FC = () => {
         <Tab.Screen
           name="Calls"
           component={CallsPage}
+          options={{headerShown: false}}
+        />
+        <Tab.Screen
+          name="Calendar"
+          component={CalendarPage}
           options={{headerShown: false}}
         />
         <Tab.Screen
