@@ -6,6 +6,7 @@ import {
   Linking,
   FlatList,
   SafeAreaView,
+  Button,
 } from 'react-native';
 
 import CallDetectorManager from 'react-native-call-detection';
@@ -121,13 +122,7 @@ const CallsComponent = () => {
             </View>
           )}
         />
-
-        <TouchableOpacity style={styles.button} onPress={startStopListener}>
-          <Text style={styles.buttonText}>
-            {/* {isStart ? 'Stop Listener' : 'Start Listener'} */}
-            start call
-          </Text>
-        </TouchableOpacity>
+        <Button title="start call" onPress={startStopListener} />
 
         {/* <TouchableOpacity
           style={styles.button}
