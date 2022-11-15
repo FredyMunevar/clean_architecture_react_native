@@ -12,9 +12,9 @@ const RichTextEditor = ({showToolbar}: {showToolbar: boolean}) => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 47 : 25}
         style={styles.container}
         enabled={true}>
-        <ScrollView style={styles.content}>
+        <ScrollView style={styles.content} keyboardDismissMode="on-drag">
           <RichEditor
-            style={styles.editor}
+            // style={styles.editor}
             ref={richText}
             // onChange={descriptionText => {
             //   console.log('descriptionText:', descriptionText);
@@ -33,6 +33,7 @@ const RichTextEditor = ({showToolbar}: {showToolbar: boolean}) => {
             unselectedButtonStyle={styles.buttonStyle}
             selectedButtonStyle={styles.buttonStyle}
             actions={[
+              actions.keyboard,
               actions.setBold,
               actions.setItalic,
               actions.setUnderline,
@@ -51,7 +52,6 @@ const RichTextEditor = ({showToolbar}: {showToolbar: boolean}) => {
               actions.insertBulletsList,
               actions.insertOrderedList,
               actions.insertLink,
-              actions.keyboard,
               actions.setStrikethrough,
               actions.removeFormat,
               actions.insertVideo,
