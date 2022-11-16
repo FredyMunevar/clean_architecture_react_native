@@ -36,13 +36,13 @@ export const RootNavigator: React.FC = () => {
           tabBarHideOnKeyboard: true,
         }}>
         <Tab.Screen
-          name="Calendar"
-          component={CalendarPage}
+          name="Calls"
+          component={CallsPage}
           options={{headerShown: false}}
         />
         <Tab.Screen
-          name="Calls"
-          component={CallsPage}
+          name="Calendar"
+          component={CalendarPage}
           options={{headerShown: false}}
         />
         <Tab.Screen

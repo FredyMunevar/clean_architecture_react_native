@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
-  TouchableOpacity,
   Linking,
   FlatList,
   SafeAreaView,
   Button,
+  RefreshControl,
 } from 'react-native';
 
 import CallDetectorManager from 'react-native-call-detection';
@@ -17,28 +17,17 @@ const msToMinSec = (milliseconds: number) => {
   const seconds = ((milliseconds % 60000) / 1000).toFixed(0);
   return minutes + ':' + (+seconds < 10 ? '0' : '') + seconds;
 };
+
 const msToTime = (milliseconds: number) => {
-  const padTo2Digits = (num: number) => {
-    return num.toString().padStart(2, '0');
-  };
-  let seconds = Math.floor(milliseconds / 1000);
-  let minutes = Math.floor(seconds / 60);
-  let hours = Math.floor(minutes / 60);
-
-  seconds = seconds % 60;
-  minutes = minutes % 60;
-  hours = hours % 24;
-
-  return `${padTo2Digits(hours)}:${padTo2Digits(minutes)}:${padTo2Digits(
-    seconds,
-  )}`;
+  const time = new Date(milliseconds).toTimeString().split(' ')[0];
+  return time;
 };
 
 const CallsComponent = () => {
-  let callDetector: {dispose: () => any} | undefined = undefined;
-  const [callStates, setCallStates] = useState<any[]>([]);
+  let callDetector: {dispose: () => any} | undefined;
   const [isStart, setIsStart] = useState(false);
-  const [flatListItems, setFlatListItems] = useState<any[]>([]);
+  const [callListItems, setCallListItems] = useState<any[]>([]);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const callFriendTapped = () => {
     Linking.openURL('tel:3042923745').catch(err => {
@@ -46,6 +35,7 @@ const CallsComponent = () => {
     });
   };
   let startTime: number;
+  let dialTime: number;
   let endTime: number;
   let callDuration: number = 0;
 
@@ -54,25 +44,26 @@ const CallsComponent = () => {
       callDetector && callDetector.dispose();
     } else {
       callDetector = new CallDetectorManager((event: string) => {
-        const time = Date.now();
+        const time = new Date().getTime();
         switch (event) {
+          case 'Dialing':
+            dialTime = time;
+            console.log('entro al ', event, ' ', dialTime);
+            break;
           case 'Connected':
             startTime = time;
             console.log('entro al ', event, ' ', startTime);
             break;
           case 'Offhook':
             startTime = time;
-            console.log('entro al ', event, ' ', startTime);
+            // console.log('entro al ', event, ' ', startTime);
             break;
-          case 'Dialing':
-            startTime = time;
-            console.log('entro al ', event);
-            break;
+
           case 'Incoming':
-            console.log('entro al ', event);
+            // console.log('entro al ', event);
             break;
           case 'Missed':
-            console.log('entro al ', event);
+            // console.log('entro al ', event);
             break;
           case 'Disconnected':
             endTime = time;
@@ -85,22 +76,21 @@ const CallsComponent = () => {
               endTime,
             );
             callDuration = endTime - startTime;
-            console.log('callDuration adentro', callDuration);
+            // console.log('callDuration adentro', callDuration);
             break;
 
           default:
             break;
         }
-        console.log('callDuration afuera', callDuration);
+        // console.log('callDuration afuera', callDuration);
 
-        let updatedCallStates = callStates;
+        let updatedCallStates = callListItems;
         updatedCallStates.push({
           event: event,
-          time: msToTime(time).toLocaleLowerCase(),
+          time: msToTime(time),
           duration: msToMinSec(callDuration),
         });
-        setFlatListItems(updatedCallStates);
-        setCallStates(updatedCallStates);
+        setCallListItems(updatedCallStates);
       });
     }
 
@@ -108,12 +98,25 @@ const CallsComponent = () => {
     callFriendTapped();
   };
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    callListItems;
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
+  console.log(callListItems);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           style={styles.list}
-          data={flatListItems}
+          data={callListItems}
           renderItem={({item}) => (
             <View style={styles.listItem}>
               <Text style={styles.listItemText}>{item.event}</Text>
