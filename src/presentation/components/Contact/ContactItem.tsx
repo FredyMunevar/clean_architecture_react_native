@@ -16,15 +16,15 @@ const ContactItem = ({
   let row: any[] = [];
   let prevOpenedRow: {close: () => void};
 
-  const closeRow = (index: number) => {
+  const closeRow = (indexRow: number) => {
     console.log('closerow');
-    if (prevOpenedRow && prevOpenedRow !== row[index]) {
+    if (prevOpenedRow && prevOpenedRow !== row[indexRow]) {
       prevOpenedRow.close();
     }
-    prevOpenedRow = row[index];
+    prevOpenedRow = row[indexRow];
   };
 
-  const renderRightActions = (progress: {}, dragX: {}) => {
+  const renderRightActions = (_progress: {}, _dragX: {}) => {
     return <View style={styles.contactOptions}>{children}</View>;
   };
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Button,
@@ -21,15 +21,33 @@ const ContactsList = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // const deleteContact = ({item}: {item?: Contact}) => {
-  //   if (item != null) {
-  //     Contacts.deleteContact(item).then( () => {
-  //       setContactList();
-  //     });
-  //   } else {
-  //     console.log('recordId is', item);
-  //   }
-  // };
+  const newContact: Contact = {
+    emailAddresses: [
+      {
+        label: 'work',
+        email: 'test-from-new-contact@example.com',
+      },
+    ],
+    familyName: 'test',
+    givenName: 'contact',
+    recordID: '',
+    backTitle: '',
+    company: '',
+    displayName: '',
+    middleName: '',
+    jobTitle: '',
+    phoneNumbers: [],
+    hasThumbnail: false,
+    thumbnailPath: '',
+    isStarred: false,
+    postalAddresses: [],
+    prefix: '',
+    suffix: '',
+    department: '',
+    birthday: undefined,
+    imAddresses: [],
+    note: '',
+  };
 
   const deleteAlert = (contactToDelete: Contact) => {
     return Alert.alert(
@@ -53,8 +71,8 @@ const ContactsList = () => {
   };
 
   const setContactList = () => {
-    getContacts.getAll().then(contacts => {
-      setContacts(contacts);
+    getContacts.getAll().then(contactsList => {
+      setContacts(contactsList);
     });
   };
 
@@ -76,7 +94,7 @@ const ContactsList = () => {
   ) => {
     return item?.recordID?.toString() || idx.toString();
   };
-
+  console.log(contacts);
   return (
     <>
       <FlatList
@@ -103,7 +121,7 @@ const ContactsList = () => {
         keyExtractor={keyExtractor}
         style={styles.list}
       />
-      <Button title="add contact" onPress={() => addContact(contacts)} />
+      <Button title="add contact" onPress={() => addContact(newContact)} />
     </>
   );
 };

@@ -1,11 +1,15 @@
 import {Platform} from 'react-native';
-import Contacts, {Contact} from 'react-native-contacts';
+import Contacts from 'react-native-contacts';
 import {PERMISSIONS, request} from 'react-native-permissions';
 
 const requestPermissions = async (): Promise<void> => {
   if (Platform.OS === 'android') {
-    let status = await request(PERMISSIONS.ANDROID.READ_CONTACTS);
-    if (status === 'denied' || status === 'blocked') {
+    let statusRead = await request(PERMISSIONS.ANDROID.READ_CONTACTS);
+    let statusWrite = await request(PERMISSIONS.ANDROID.WRITE_CONTACTS);
+    if (statusRead === 'denied' || statusRead === 'blocked') {
+      throw Error('Permission not granted to access contacts');
+    }
+    if (statusWrite === 'denied' || statusWrite === 'blocked') {
       throw Error('Permission not granted to access contacts');
     }
   }
@@ -13,7 +17,7 @@ const requestPermissions = async (): Promise<void> => {
 
 const getAll = async (): Promise<any[]> => {
   await requestPermissions();
-  return new Promise((res, rej) => {
+  return new Promise(res => {
     Contacts.getAll().then(contacts => {
       res(contacts);
     });
@@ -23,13 +27,22 @@ const getAll = async (): Promise<any[]> => {
 export const getContacts = {getAll};
 
 export const openContact = (contact: Contacts.Contact) => {
-  Contacts.openExistingContact(contact);
+  // Contacts.openExistingContact(contact); // This is to edit current contact with native contact form
+  contact.emailAddresses.push({
+    label: 'junk',
+    email: 'test-from-edit-contact@test.com',
+  });
+  Contacts.updateContact(contact).then(() => {
+    console.log(`contact ${contact.recordID} updated`);
+  });
 };
 
-export const addContact = (contactList: Contacts.Contact[]) => {
-  Contacts.openContactForm({}).then(() => {
-    contactList;
-  });
+export const addContact = (contactList: Contacts.Contact) => {
+  // Contacts.openContactForm({}).then(() => { // This is to add a contact with native contact form
+  //   contactList;
+  // });
+
+  Contacts.addContact(contactList);
 };
 // export const deleteContact = ({item}: {item: Contact}) => {
 //   if (item != null) {
