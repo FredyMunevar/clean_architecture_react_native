@@ -1,7 +1,6 @@
-import {HomeStack} from './homeStack';
+import React from 'react';
 import Home from '../page/home/home';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import RichTextPage from '../page/RichText/RichTextPage';
 import ContactsPage from '../page/Contacts/ContactsPage';
@@ -9,7 +8,6 @@ import CallsPage from '../page/Calls/CallsPage';
 import CalendarPage from '../page/Calendar/CalendarPage';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
 
 export const RootNavigator: React.FC = () => {
   // function HomeTab() {
@@ -35,6 +33,7 @@ export const RootNavigator: React.FC = () => {
         screenOptions={{
           tabBarHideOnKeyboard: true,
         }}>
+        <Tab.Screen name="Home" component={Home} />
         <Tab.Screen
           name="Calls"
           component={CallsPage}
@@ -55,7 +54,6 @@ export const RootNavigator: React.FC = () => {
           component={RichTextPage}
           options={{headerShown: false}}
         />
-        <Tab.Screen name="Home" component={Home} />
       </Tab.Navigator>
     </NavigationContainer>
   );

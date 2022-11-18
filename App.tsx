@@ -8,7 +8,7 @@
  * @format
  */
 
-import React, {type PropsWithChildren} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {store} from './src/presentation/redux/store';
 import {RootNavigator} from './src/presentation/navegation/RootNavigator';
@@ -17,7 +17,6 @@ import DependencyInjectionInfrastructure from './src/infrastructure/dependencyIn
 import DependencyInjectionApplication from './src/application/dependencyInjectionApplication';
 import DependencyInjectionPresentation from './src/presentation/dependencyPresentation';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {PermissionsAndroid} from 'react-native';
 
 EStyleSheet.build();
 

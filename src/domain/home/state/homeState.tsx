@@ -1,8 +1,8 @@
-import ResponseHome from '../model/responseHome'
+import ResponseHome from '../model/responseHome';
 
 export const HomeState = {
   data: new ResponseHome(),
-  loading: false
-}
+  loading: false,
+};
 
-export default HomeState
+export default HomeState;

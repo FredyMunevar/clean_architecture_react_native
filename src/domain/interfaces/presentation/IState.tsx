@@ -1,5 +1,6 @@
-import HomeState from '../../home/state/homeState'
-
-export default interface IState {
-  home: typeof HomeState
+import HomeState from '../../home/state/homeState';
+export interface IState {
+  home: typeof HomeState;
 }
+
+export default IState;
